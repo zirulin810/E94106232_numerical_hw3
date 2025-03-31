@@ -68,8 +68,10 @@ if __name__ == "__main__":
         
         bound = error_bound(x_target, x_used, n)
         actual_error = abs(result - true_value)
+        relative_error = actual_error / abs(true_value) * 100
         
         print(f"\nResult of P{n}({x_target:.3f})：")
         print(f"Result = {result:.7f}")
-        print(f"Bound = {bound:.7f}")
-        print(f"Abs error = {actual_error:.7f}")
+        print(f"Error bound = {bound:.7f}")
+        print(f"Absolute error = {actual_error:.7f}")
+        print(f"Relative error = {relative_error:.7f}%")
