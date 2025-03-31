@@ -38,14 +38,14 @@ def lagrange_interpolation(x, x_points, y_points):
 def error_bound(x, x_points, n):
     M_n_plus_1 = 1
     w_x = 1
-    for i in range(n + 1):
+    for i in range(len(x_points)):
         w_x *= (x - x_points[i])
     
-    error = abs(M_n_plus_1 / factorial(n + 1)) * abs(w_x)
+    error = abs(M_n_plus_1 / factorial(len(x_points))) * abs(w_x)
     return error
 
 def print_separator():
-    print("\n"+"-"*80)
+    print("-"*80)
 
 if __name__ == "__main__":
     x_points = np.array([0.698, 0.733, 0.768, 0.803])
@@ -53,12 +53,16 @@ if __name__ == "__main__":
     x_target = 0.750
     true_value = 0.7317
     
-    for n in range(1, 4):
+    for n in range(1, 5):
         print_separator()
-        print(f"\n{n}th Lagrange interpolation polynomial：")
+        print(f"{n}th Lagrange interpolation polynomial：")
         
-        x_used = x_points[:n+1]
-        y_used = y_points[:n+1]
+        if n == 4:
+            x_used = np.append(x_points, x_target)
+            y_used = np.append(y_points, true_value)
+        else:
+            x_used = x_points[:n+1]
+            y_used = y_points[:n+1]
         
         print("\nPoints used：")
         for i in range(len(x_used)):
@@ -70,8 +74,7 @@ if __name__ == "__main__":
         actual_error = abs(result - true_value)
         relative_error = actual_error / abs(true_value) * 100
         
-        print(f"\nResult of P{n}({x_target:.3f})：")
-        print(f"Result = {result:.7f}")
+        print(f"\nResult = {result:.7f}")
         print(f"Error bound = {bound:.7f}")
         print(f"Absolute error = {actual_error:.7f}")
         print(f"Relative error = {relative_error:.7f}%")
